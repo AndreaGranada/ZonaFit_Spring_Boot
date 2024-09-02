@@ -12,7 +12,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import java.util.List;
 import java.util.Scanner;
 
-@SpringBootApplication
+//@SpringBootApplication para que no se llama a spring en esta clase
 public class ZonaFitApplication implements CommandLineRunner {
 
 	@Autowired
