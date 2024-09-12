@@ -1,7 +1,6 @@
 package gm.zona_fit.controlador;
 
 import gm.zona_fit.modelo.Cliente;
-
 import gm.zona_fit.servicio.IClienteServicio;
 import jakarta.annotation.PostConstruct;
 import jakarta.faces.application.FacesMessage;
@@ -43,17 +42,23 @@ public class IndexControlador {
 
     public void guardarCliente(){
         logger.info("cliente a guardar: " + this.clienteSeleccionado);
-        // Agregar
+        // Agregar (insert)
         if(this.clienteSeleccionado.getId() == null){
             this.clienteServicio.guardarCliente(this.clienteSeleccionado);
             this.clientes.add(this.clienteSeleccionado);
             FacesContext.getCurrentInstance().addMessage(null,
                     new FacesMessage("Cliente Agregado"));
         }
+        // Modificar (update)
+        else{
+            this.clienteServicio.guardarCliente(clienteSeleccionado);
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage("Cliente actualizado"));
+        }
         // Ocultar la ventana modal
-        PrimeFaces.current().executeScript("FP('ventanaModalCliente').hide()");
+        PrimeFaces.current().executeScript("PF('ventanaModalCliente').hide()");
         // Actualizar la tabla usando ajax
-        PrimeFaces.current().ajax().update("forma-clientes:mensaje",
+        PrimeFaces.current().ajax().update("forma-clientes:mensajes",
                 "forma-clientes:clientes-tabla");
         // Reset del objeto cliente seleccionado
         this.clienteSeleccionado = null;
